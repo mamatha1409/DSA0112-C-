@@ -1,0 +1,579 @@
+//reverse function to remove duplicates//
+#include <iostream>
+using namespace std;
+string removeDuplicates(string s) {
+    if (s.length() <= 1) {
+        return s;
+    }
+    if (s[0] == s[1]) {
+        return removeDuplicates(s.substr(1));
+    }
+    return s[0] + removeDuplicates(s.substr(1));
+}
+int main() {
+    string input;
+    cout << "Enter a string: ";
+    cin >> input;
+    string result = removeDuplicates(input);
+    cout << "String after removing duplicates: " << result << endl;    
+    return 0;
+}
+
+//subsequences//
+#include <iostream>
+using namespace std;
+void generateSubsequences(string s, string current, int index) {
+    if (index == s.length()) {
+        cout << current << endl;
+        return;
+    }
+    generateSubsequences(s, current + s[index], index + 1);
+    generateSubsequences(s, current, index + 1);
+}
+int main() {
+    string input;
+    cout << "Enter a string: ";
+    cin >> input;
+    cout << "Subsequences of the string are:\n";
+    generateSubsequences(input, "", 0);
+    return 0;
+}
+
+//permutations and combinations//
+#include <iostream>
+using namespace std;
+int factorial(int n) {
+    if (n <= 1) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+int permutations(int n, int r) {
+    return factorial(n) / factorial(n - r);
+}
+int combinations(int n, int r) {
+    return factorial(n) / (factorial(r) * factorial(n - r));
+}
+int main() {
+    int n, r;
+    cout << "Enter values for n and r (n >= r): ";
+    cin >> n >> r;
+    if (n < r) {
+        cout << "Invalid input! n must be greater than or equal to r." << endl;
+        return 1;
+    }
+    int perm = permutations(n, r);
+    int comb = combinations(n, r);
+    cout << "Permutations (nPr): " << perm << endl;
+    cout << "Combinations (nCr): " << comb << endl;
+    return 0;
+}
+
+//Type converstion exception//
+#include <iostream>
+#include <stdexcept>
+using namespace std; 
+class Base {
+public:
+    virtual ~Base() {}
+};
+class Derived : public Base {
+public:
+    void show() {
+        cout << "Derived class show function." << endl;
+    }
+};
+class Unrelated {}; 
+void safeCast(Base* basePtr) {
+    Derived* derivedPtr = dynamic_cast<Derived*>(basePtr);
+    if (derivedPtr) {
+        derivedPtr->show();
+    } else {
+        throw runtime_error("Type conversion failed: basePtr is not pointing to a Derived object.");
+    }
+}
+int main() {
+    Base* basePtr = new Base(); 
+    Derived* derivedPtr = new Derived(); 
+    try {
+        safeCast(basePtr); 
+    } catch (const runtime_error& e) {
+        cerr << "Exception caught: " << e.what() << endl;
+    }
+    try {
+        safeCast(derivedPtr);
+    } catch (const runtime_error& e) {
+        cerr << "Exception caught: " << e.what() << endl;
+    }
+    delete basePtr; 
+    delete derivedPtr;
+    return 0;
+}
+
+//Magic number//
+#include <iostream>
+using namespace std;1
+int digitalRoot(int n) {
+    while (n >= 10) { 
+        int sum = 0;
+        while (n > 0) {
+            sum += n % 10;
+            n /= 10;      
+        }
+        n = sum; 
+    }
+    return n; 
+}
+int main() {
+    int number;
+    cout << "Enter a number: ";
+    cin >> number;
+    int result = digitalRoot(number);
+    if (result == 1) {
+        cout << number << " is a magic number!" << endl;
+    } else {
+        cout << number << " is not a magic number." << endl;
+    }
+    return 0;
+}
+
+//Hallow pyramid and square//
+#include <iostream>
+using namespace std;
+int main() {
+    int size;
+    cout << "Enter size for pyramid: ";
+    cin >> size;
+    for (int i = 1; i <= size; i++) {
+        for (int j = 1; j <= size - i; j++) cout << " ";
+        for (int j = 1; j <= 2 * i - 1; j++)
+            cout << (j == 1 || j == 2 * i - 1 || i == size ? "*" : " ");
+        cout << endl;
+    }
+    cout << "\nEnter size for square: ";
+    cin >> size;
+    for (int i = 1; i <= size; i++) {
+        for (int j = 1; j <= size; j++)
+            cout << ((i == 1 || i == size || j == 1 || j == size) ? "*" : " ");
+        cout << endl;
+    }
+    return 0;
+}
+
+//Anagram//
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int main() {
+    string str1, str2;
+    cout << "Enter first string: ";
+    cin >> str1;
+    cout << "Enter second string: ";
+    cin >> str2;
+    sort(str1.begin(), str1.end());
+    sort(str2.begin(), str2.end());
+    if (str1 == str2)
+        cout << "The strings are anagrams." << endl;
+    else
+        cout << "The strings are not anagrams." << endl;
+    return 0;
+}
+
+//Null pointer//
+#include <iostream>
+using namespace std;
+
+int main() {
+    int* ptr = nullptr;
+
+    if (ptr == nullptr) {
+        cout << "The pointer is null." << endl;
+    } else {
+        cout << "The pointer is not null." << endl;
+    }
+
+    int value = 10;
+    ptr = &value;
+
+    if (ptr == nullptr) {
+        cout << "The pointer is null." << endl;
+    } else {
+        cout << "The pointer is not null." << endl;
+    }
+
+    return 0;
+}
+
+//Alternate//
+#include <iostream>
+using namespace std;
+
+int main() {
+    int arr1[] = {1, 3, 5};
+    int arr2[] = {2, 4, 6, 8};
+    int size1 = sizeof(arr1) / sizeof(arr1[0]);
+    int size2 = sizeof(arr2) / sizeof(arr2[0]);
+    
+    for (int i = 0; i < size1 || i < size2; i++) {
+        if (i < size1) cout << arr1[i] << " ";
+        if (i < size2) cout << arr2[i] << " ";
+    }
+    
+    cout << endl;
+    return 0;
+}
+
+//Encoding//
+#include <iostream>
+#include <string>
+using namespace std;
+
+string encode(const string &input, int key) {
+    string encoded = "";
+    for (char ch : input) {
+        if (isalpha(ch)) {
+            char base = islower(ch) ? 'a' : 'A';
+            encoded += (ch - base + key) % 26 + base;
+        } else {
+            encoded += ch;
+        }
+    }
+    return encoded;
+}
+
+string decode(const string &input, int key) {
+    return encode(input, 26 - key);
+}
+
+int main() {
+    string text;
+    int key;
+
+    cout << "Enter a string to encode: ";
+    getline(cin, text);
+    cout << "Enter key: ";
+    cin >> key;
+
+    string encodedText = encode(text, key);
+    cout << "Encoded: " << encodedText << endl;
+
+    string decodedText = decode(encodedText, key);
+    cout << "Decoded: " << decodedText << endl;
+
+    return 0;
+}
+
+//Prefix//
+#include <iostream>
+#include <vector>
+using namespace std;
+string longestCommonPrefix(vector<string>& strs) {
+    if (strs.empty()) return "";
+    string prefix = strs[0];
+    for (int i = 1; i < strs.size(); ++i) {
+        while (strs[i].find(prefix) != 0) 
+            prefix.pop_back(); 
+        if (prefix.empty()) return "";
+    }
+    return prefix;
+}
+int main() {
+    vector<string> strs = {"flower", "flow", "flight"};
+    cout << longestCommonPrefix(strs) << endl;
+    return 0;
+}
+
+//co,mpress//
+#include <iostream>
+#include <string>
+using namespace std;
+string compressString(const string &input) {
+    string compressed = "";
+    for (size_t i = 0; i < input.size(); ++i) {
+        int count = 1;
+        while (i < input.size() - 1 && input[i] == input[i + 1]) {
+            count++;
+            i++;
+        }
+        compressed += input[i]; 
+        if (count > 1) compressed += to_string(count);
+    }
+    return compressed.size() < input.size() ? compressed : input;
+}
+int main() {
+    cout << compressString("aabbbccccccd") << endl;
+    return 0;
+}
+//Tower of hanoi//
+#include <iostream>
+using namespace std;
+void towerOfHanoi(int n, char source, char target, char auxiliary) {
+    if (n == 1) {
+        cout << "Move disk 1 from " << source << " to " << target << endl;
+        return;
+    }
+    towerOfHanoi(n - 1, source, auxiliary, target);
+    cout << "Move disk " << n << " from " << source << " to " << target << endl;
+    towerOfHanoi(n - 1, auxiliary, target, source);
+}
+int main() {
+    int n = 3;
+    towerOfHanoi(n, 'A', 'C', 'B');
+    return 0;
+}
+
+//copy string using pointers//
+#include <iostream>
+using namespace std;
+void copyString(char* dest, const char* src) {
+    while ((*dest++ = *src++));
+}
+int main() {
+    const char* original = "Hello, World!";
+    char copied[50];
+    copyString(copied, original);    
+    cout << "Copied: " << copied << endl;
+    return 0;
+}
+
+//Sparse array//
+#include <iostream>
+using namespace std;
+
+int main() {
+    int sparseArray[] = {0, 3, 0, 5, 0, 10, 0, 7};
+    int size = sizeof(sparseArray) / sizeof(sparseArray[0]);
+
+    int index1 = 1; 
+    int index2 = 5; 
+
+    if (index1 < size && index2 < size) {
+        int sum = sparseArray[index1] + sparseArray[index2];
+
+        cout << "Value at index " << index1 << ": " << sparseArray[index1] << endl;
+        cout << "Value at index " << index2 << ": " << sparseArray[index2] << endl;
+        cout << "Sum of the two values: " << sum << endl;
+    } else {
+        cout << "Index out of bounds." << endl;
+    }
+
+    return 0;
+}
+
+//Calculate Hypotenuse//
+#include <iostream>
+using namespace std;
+double calculateHypothesis(double theta0, double theta1, double x) {
+    return theta0 + theta1 * x;
+}
+int main() {
+    double theta0 = 2.0; 
+    double theta1 = 3.0;
+    double x = 4.0;     
+    double result = calculateHypothesis(theta0, theta1, x);
+    cout << "Hypothesis: " << result << endl;
+    return 0;
+}
+
+//To find all qudratriplets in an array
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+void findQuadruplets(int arr[], int n, int target) {
+    sort(arr, arr + n); 
+
+    for (int i = 0; i < n - 3; i++) {
+        if (i > 0 && arr[i] == arr[i - 1]) continue; 
+
+        for (int j = i + 1; j < n - 2; j++) {
+            if (j > i + 1 && arr[j] == arr[j - 1]) continue; 
+
+            int left = j + 1;
+            int right = n - 1;
+
+            while (left < right) {
+                int sum = arr[i] + arr[j] + arr[left] + arr[right];
+
+                if (sum == target) {
+                    cout << "[" << arr[i] << ", " << arr[j] << ", " << arr[left] << ", " << arr[right] << "]\n";
+
+                    while (left < right && arr[left] == arr[left + 1]) left++;
+                    while (left < right && arr[right] == arr[right - 1]) right--;
+
+                    left++;
+                    right--;
+                } else if (sum < target) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+    }
+}
+
+int main() {
+    int arr[] = {1, 0, -1, 0, -2, 2};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int target = 0;
+
+    cout << "Unique quadruplets that sum to " << target << ":\n";
+    findQuadruplets(arr, n, target);
+
+    return 0;
+}
+
+//power using overloading//
+#include <iostream>
+using namespace std;
+
+int power(int base, int exp) {
+    int result = 1;
+    for (int i = 0; i < exp; i++) result *= base;
+    return result;
+}
+
+double power(double base, int exp) {
+    double result = 1;
+    for (int i = 0; i < exp; i++) result *= base;
+    return result;
+}
+
+int main() {
+    cout << "2^3 = " << power(2, 3) << endl;
+    cout << "2.5^3 = " << power(2.5, 3) << endl;
+    return 0;
+}
+
+//Triangular Matrix//
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Enter size: ";
+    cin >> n;
+
+    int matrix[10][10];
+    cout << "Enter elements:\n";
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            cin >> matrix[i][j];
+
+    cout << "Upper Triangular:\n";
+    for (int i = 0; i < n; i++, cout << endl)
+        for (int j = 0; j < n; j++)
+            cout << (j < i ? 0 : matrix[i][j]) << " ";
+    
+    cout << "Lower Triangular:\n";
+    for (int i = 0; i < n; i++, cout << endl)
+        for (int j = 0; j < n; j++)
+            cout << (j > i ? 0 : matrix[i][j]) << " ";
+
+    return 0;
+}
+
+//Over loading Complexnumber//
+#include <iostream>
+using namespace std;
+
+class Complex {
+public:
+    float real, imag;
+
+    Complex(float r = 0, float i = 0) : real(r), imag(i) {}
+
+    Complex operator+(const Complex& c) {
+        return Complex(real + c.real, imag + c.imag);
+    }
+    
+    Complex operator-(const Complex& c) {
+        return Complex(real - c.real, imag - c.imag);
+    }
+
+    Complex operator*(const Complex& c) {
+        return Complex(real * c.real - imag * c.imag, real * c.imag + imag * c.real);
+    }
+
+    void display() {
+        cout << real << (imag >= 0 ? "+" : "") << imag << "i" << endl;
+    }
+};
+
+int main() {
+    Complex c1(3, 2); 
+    Complex c2(1, 7); 
+
+    Complex sum = c1 + c2;         
+    Complex difference = c1 - c2;  
+    Complex product = c1 * c2;    
+
+    cout << "c1: ";
+    c1.display();
+    cout << "c2: ";
+    c2.display();
+    cout << "Sum: ";
+    sum.display();
+    cout << "Difference: ";
+    difference.display();
+    cout << "Product: ";
+    product.display();
+
+    return 0;
+}
+
+//Compound Interest//
+#include <iostream>
+#include <cmath> 
+using namespace std;
+
+int main() {
+    double principal, rate, time, amount, compoundInterest;
+    int n;
+
+    cout << "Enter the principal amount: ";
+    cin >> principal;
+
+    cout << "Enter the annual interest rate (in percentage): ";
+    cin >> rate;
+
+    cout << "Enter the number of years: ";
+    cin >> time;
+
+    cout << "Enter the number of times interest is compounded per year: ";
+    cin >> n;
+
+    amount = principal * pow((1 + (rate / 100) / n), n * time);
+    compoundInterest = amount - principal;
+
+    cout << "Total Amount: " << amount << endl;
+    cout << "Compound Interest: " << compoundInterest << endl;
+
+    return 0;
+}
+
+//Division Exception Handling//
+#include <iostream>
+#include <exception>
+using namespace std;
+
+int main() {
+    try {
+        int x, y;
+        cout << "Enter two numbers: ";
+        cin >> x >> y;
+
+        if (y == 0) {
+            throw runtime_error("Division by zero error!");  // Throw standard exception
+        }
+
+        cout << "Result of division: " << (x / y) << endl;
+    } catch (const exception& e) {
+        // Catch block for any exception derived from std::exception
+        cout << e.what() << endl;
+    }
+
+    return 0;
+}
